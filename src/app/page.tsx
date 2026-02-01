@@ -103,63 +103,74 @@ const jobBuilds = [
   },
 ];
 
-// All traits organized by tier
+// All traits organized by tier - Complete data from Ferro s12
 const allTraits = {
   "S+": [
-    { name: "Warlike", effect: "Attack +10%", role: "Combat" },
-    { name: "Vigorous", effect: "HP +10%", role: "Combat" },
-    { name: "Blessed", effect: "Crit Rate +8%", role: "Combat" },
-    { name: "Heartless", effect: "Crit Damage +8%", role: "Combat" },
-    { name: "Diamond Skull", effect: "Crit DEF +15%", role: "Combat" },
-    { name: "Ironclad", effect: "Defense +10%", role: "Combat" },
+    // Offensive
+    { name: "Warlike", effect: "Attack +10%", role: "Offensive" },
+    { name: "Heartless", effect: "Crit Damage +15%", role: "Offensive" },
+    { name: "Blessed", effect: "Crit Rate +8%", role: "Offensive" },
+    { name: "Deadeye", effect: "Accuracy +8%", role: "Offensive" },
+    // Defensive
+    { name: "Vigorous", effect: "HP +10%", role: "Defensive" },
+    { name: "Unshakeable", effect: "Defense +10%", role: "Defensive" },
+    { name: "Diamond Skull", effect: "Crit Defense +15%", role: "Defensive" },
+    { name: "Iron Will", effect: "Tenacity +8%", role: "Defensive" },
+    { name: "Shadow", effect: "Evasion +8%", role: "Defensive" },
+    { name: "Serene", effect: "Stun Resist +12%", role: "Defensive" },
   ],
   S: [
-    { name: "Prodigy", effect: "Research time -900s", role: "Analyzing" },
-    { name: "Supersonic", effect: "Move Speed +10%", role: "All Jobs" },
-    { name: "Clear-Headed", effect: "Stun Resist +7%", role: "Combat" },
-    { name: "Unyielding", effect: "Tenacity +5%", role: "Combat" },
-    { name: "Sharpshooter", effect: "Accuracy +5%", role: "Combat" },
-    { name: "Steadfast", effect: "Defense +7%", role: "Combat" },
-    { name: "Belligerent", effect: "Attack +7%", role: "Combat" },
+    // Offensive
+    { name: "Belligerent", effect: "Attack +7%", role: "Offensive" },
+    { name: "Ruthless", effect: "Crit Damage +8%", role: "Offensive" },
+    { name: "Fortunate", effect: "Crit Rate +5%", role: "Offensive" },
+    { name: "Sharpshooter", effect: "Accuracy +5%", role: "Offensive" },
+    // Defensive
+    { name: "Robust", effect: "HP +7%", role: "Defensive" },
+    { name: "Steadfast", effect: "Defense +7%", role: "Defensive" },
+    { name: "Steel Skull", effect: "Crit Defense +8%", role: "Defensive" },
+    { name: "Unyielding", effect: "Tenacity +5%", role: "Defensive" },
+    { name: "Elusive", effect: "Evasion +5%", role: "Defensive" },
+    { name: "Clear-Headed", effect: "Stun Resist +7%", role: "Defensive" },
+    // Work
+    { name: "Prodigy", effect: "Research -900s", role: "Work" },
+    { name: "Supersonic", effect: "Move Speed +10%", role: "Work" },
   ],
   A: [
-    { name: "Industrious", effect: "Job Efficiency +18%", role: "All Jobs" },
-    { name: "Lightspeed", effect: "Move Speed +15%", role: "All Jobs" },
-    { name: "Diligent", effect: "Job Efficiency +10%", role: "All Jobs" },
-    { name: "Temperate", effect: "Food consumption -25%", role: "Sustain" },
-    { name: "Caffeinated", effect: "Energy -25% slower", role: "Sustain" },
-    { name: "Light Eater", effect: "Hunger -25% slower", role: "Sustain" },
-    { name: "Coach", effect: "Training time -4%", role: "Training" },
-    { name: "Fleet-Footed", effect: "Move Speed +5%", role: "All Jobs" },
-    { name: "Iron Skull", effect: "Crit DMG Reduction +4%", role: "Combat" },
-    { name: "Brutal", effect: "Crit Damage +4%", role: "Combat" },
-    { name: "Hardy", effect: "Tenacity +2.5%", role: "Combat" },
-    { name: "Favored", effect: "Crit Rate +2.5%", role: "Combat" },
-    { name: "Slippery", effect: "Evasion +2.5%", role: "Combat" },
-    { name: "Crack Shot", effect: "Accuracy +2.5%", role: "Combat" },
-    { name: "Energetic", effect: "HP +4%", role: "Combat" },
-    { name: "Resolute", effect: "Defense +4%", role: "Combat" },
-    { name: "Combative", effect: "Attack +4%", role: "Combat" },
+    // Offensive
+    { name: "Combative", effect: "Attack +4%", role: "Offensive" },
+    { name: "Brutal", effect: "Crit Damage +4%", role: "Offensive" },
+    { name: "Favored", effect: "Crit Rate +2.5%", role: "Offensive" },
+    { name: "Crack Shot", effect: "Accuracy +2.5%", role: "Offensive" },
+    // Defensive
+    { name: "Energetic", effect: "HP +4%", role: "Defensive" },
+    { name: "Resolute", effect: "Defense +4%", role: "Defensive" },
+    { name: "Iron Skull", effect: "Crit Defense +4%", role: "Defensive" },
+    { name: "Hardy", effect: "Tenacity +2.5%", role: "Defensive" },
+    { name: "Slippery", effect: "Evasion +2.5%", role: "Defensive" },
+    { name: "Steady", effect: "Stun Resist +5%", role: "Defensive" },
+    // Work
+    { name: "Industrious", effect: "Job Efficiency +18%", role: "Work" },
+    { name: "Lightspeed", effect: "Move Speed +15%", role: "Work" },
+    { name: "Diligent", effect: "Job Efficiency +10%", role: "Work" },
+    { name: "Fleet-Footed", effect: "Move Speed +5%", role: "Work" },
   ],
   B: [
-    { name: "Sweet Dreams", effect: "XP +5% (Bed)", role: "Rest" },
-    { name: "Comfy", effect: "XP +1/sec (Bed)", role: "Rest" },
-    { name: "Alchemist", effect: "Magicking +2%", role: "Magicking" },
-    { name: "Dremium Hunter", effect: "Dremium +2%", role: "Dremium" },
-    { name: "Healing Touch", effect: "Healing time -2%", role: "Healing" },
-    { name: "Anvil Adept", effect: "Smelting +5%", role: "Smelting" },
-    { name: "Stone Skull", effect: "Crit DMG Reduction +3%", role: "Combat" },
-    { name: "Mean", effect: "Crit Damage +3%", role: "Combat" },
-    { name: "Stubborn", effect: "Tenacity +1.5%", role: "Combat" },
-    { name: "Lucky", effect: "Crit Rate +1.5%", role: "Combat" },
-    { name: "Nimble", effect: "Evasion +1.5%", role: "Combat" },
-    { name: "Gunner", effect: "Accuracy +1.5%", role: "Combat" },
-    { name: "Durable", effect: "HP +2%", role: "Combat" },
-    { name: "Rooted", effect: "Defense +2%", role: "Combat" },
-    { name: "Hostile", effect: "Attack +2%", role: "Combat" },
+    // Offensive
+    { name: "Hostile", effect: "Attack +2%", role: "Offensive" },
+    { name: "Mean", effect: "Crit Damage +3%", role: "Offensive" },
+    { name: "Lucky", effect: "Crit Rate +1.5%", role: "Offensive" },
+    { name: "Gunner", effect: "Accuracy +1.5%", role: "Offensive" },
+    // Defensive
+    { name: "Durable", effect: "HP +2%", role: "Defensive" },
+    { name: "Rooted", effect: "Defense +2%", role: "Defensive" },
+    { name: "Stone Skull", effect: "Crit Defense +3%", role: "Defensive" },
+    { name: "Stubborn", effect: "Tenacity +1.5%", role: "Defensive" },
+    { name: "Nimble", effect: "Evasion +1.5%", role: "Defensive" },
+    { name: "Calm", effect: "Stun Resist +2%", role: "Defensive" },
   ],
   C: [
-    { name: "Fabergé Jaw", effect: "Crit DMG Reduction -3%", role: "❌" },
+    { name: "Fabergé Jaw", effect: "Crit Defense -3%", role: "❌" },
     { name: "Softie", effect: "Crit Damage -3%", role: "❌" },
     { name: "Spineless", effect: "Tenacity -2%", role: "❌" },
     { name: "Jinxed", effect: "Crit Rate -2%", role: "❌" },
@@ -342,13 +353,24 @@ export default function Home() {
         <section className="mb-16">
           <div className="flex items-center gap-4 mb-8">
             <span className="font-mono text-sm font-bold px-3 py-1.5 rounded bg-gradient-to-r from-orange-500 to-red-500 text-white">S+ TIER</span>
-            <h2 className="text-2xl font-bold">God-Tier Traits (Best in Game!)</h2>
+            <h2 className="text-2xl font-bold">God-Tier Traits (Ultra Rare!)</h2>
           </div>
           
           <div className="bg-gradient-to-br from-orange-500/10 to-red-500/10 border-2 border-orange-500/30 rounded-2xl p-6">
-            <p className="text-orange-300 text-sm mb-4">⭐ These are the BEST traits in the game — never release a Palmon with these!</p>
-            <div className="grid md:grid-cols-2 gap-3">
-              {allTraits["S+"].map((t) => <TraitRow key={t.name} {...t} />)}
+            <p className="text-orange-300 text-sm mb-4">⭐ These are the BEST traits — extremely rare, not generally available. NEVER release a Palmon with these!</p>
+            <div className="grid md:grid-cols-2 gap-4">
+              <div>
+                <h4 className="text-xs uppercase tracking-widest text-orange-400 mb-3">⚔️ Offensive</h4>
+                <div className="space-y-2">
+                  {allTraits["S+"].filter(t => t.role === "Offensive").map((t) => <TraitRow key={t.name} {...t} />)}
+                </div>
+              </div>
+              <div>
+                <h4 className="text-xs uppercase tracking-widest text-orange-400 mb-3">🛡️ Defensive</h4>
+                <div className="space-y-2">
+                  {allTraits["S+"].filter(t => t.role === "Defensive").map((t) => <TraitRow key={t.name} {...t} />)}
+                </div>
+              </div>
             </div>
           </div>
         </section>
