@@ -1,92 +1,249 @@
 import Image from "next/image";
 
-const urPalmons = [
-  { name: "Lucidina", power: "3.17M", image: "/images/lucidina.jpg", traits: ["S Belligerent", "S Robust"] },
-  { name: "Mantleray", power: "2.71M", image: "/images/mantleray.jpg", traits: ["+43 Shield", "Best Equipped"] },
-  { name: "Baboom", power: "2.56M", image: "/images/baboom.jpg", traits: ["+23/+22/+21/+21", "Full Gear"] },
-  { name: "Barkplug", power: "2.56M", image: "/images/barkplug.jpg", traits: ["Electric DPS", "+22/+16/+16/+25"] },
-  { name: "Statchew", power: "2.43M", image: "/images/statchew.jpg", traits: ["Cyber Dog", "+20/+20/+13"] },
-  { name: "Blazeal", power: "2.01M", image: "/images/blazeal.jpg", traits: ["Fire DPS", "+20/+10/+21"] },
+// Best traits per job/role
+const jobBuilds = [
+  {
+    job: "Combat",
+    icon: "⚔️",
+    description: "Base defense & raids",
+    bestPalmons: ["Ghillant", "Mantieray", "Ninjump"],
+    idealTraits: [
+      { tier: "S", name: "Belligerent", effect: "+7% ATK" },
+      { tier: "S", name: "Vigorous", effect: "+10% HP" },
+      { tier: "S", name: "Clear-Headed", effect: "+7% Stun Resist" },
+      { tier: "A", name: "Blessed", effect: "+8% Crit Rate" },
+      { tier: "A", name: "Sharpshooter", effect: "+5% Accuracy" },
+    ],
+    images: ["/images/ninjump.jpg", "/images/mantleray.jpg"],
+  },
+  {
+    job: "Planting & Harvesting",
+    icon: "🌱",
+    description: "Crop production",
+    bestPalmons: ["Lendanear", "Spinchilla", "Graffitty"],
+    idealTraits: [
+      { tier: "S", name: "Supersonic", effect: "+10% Move Speed" },
+      { tier: "A", name: "Industrious", effect: "+18% Job Efficiency" },
+      { tier: "A", name: "Fleet-Footed", effect: "+5% Move Speed" },
+      { tier: "A", name: "Lightspeed", effect: "+15% Move Speed" },
+    ],
+    images: ["/images/lendanear.jpg"],
+  },
+  {
+    job: "Watering",
+    icon: "💧",
+    description: "Crop irrigation",
+    bestPalmons: ["Squeezel", "Maximito", "Meowdame"],
+    idealTraits: [
+      { tier: "A", name: "Lightspeed", effect: "+15% Move Speed" },
+      { tier: "A", name: "Industrious", effect: "+18% Job Efficiency" },
+      { tier: "A", name: "Diligent", effect: "+10% Job Efficiency" },
+    ],
+    images: ["/images/squeezel.jpg", "/images/maximito.jpg", "/images/meowdame.jpg"],
+  },
+  {
+    job: "Logging",
+    icon: "🪓",
+    description: "Wood collection",
+    bestPalmons: ["Baboom", "Cerverdant", "Dolphriend"],
+    idealTraits: [
+      { tier: "A", name: "Industrious", effect: "+18% Job Efficiency" },
+      { tier: "A", name: "Lightspeed", effect: "+15% Move Speed" },
+      { tier: "A", name: "Diligent", effect: "+10% Job Efficiency" },
+    ],
+    images: ["/images/baboom.jpg", "/images/cerverdant.jpg", "/images/dolphriend.jpg"],
+  },
+  {
+    job: "Sawing",
+    icon: "🪚",
+    description: "Plank production",
+    bestPalmons: ["Platyputz", "Herculeaf", "Graffitty"],
+    idealTraits: [
+      { tier: "S", name: "Plank Pro", effect: "+3% Sawing Output" },
+      { tier: "A", name: "Industrious", effect: "+18% Job Efficiency" },
+      { tier: "A", name: "Diligent", effect: "+10% Job Efficiency" },
+    ],
+    images: ["/images/platyputz.jpg"],
+  },
+  {
+    job: "Mining",
+    icon: "⛏️",
+    description: "Ore extraction",
+    bestPalmons: ["Magmolin", "Bruiseberry", "Terrastudo"],
+    idealTraits: [
+      { tier: "S", name: "Efficient", effect: "+Mining Output" },
+      { tier: "A", name: "Industrious", effect: "+18% Job Efficiency" },
+      { tier: "A", name: "Diligent", effect: "+10% Job Efficiency" },
+    ],
+    images: ["/images/magmolin.jpg", "/images/bruiseberry.jpg", "/images/terrastudo.jpg"],
+  },
+  {
+    job: "Smelting",
+    icon: "🔥",
+    description: "Metal processing",
+    bestPalmons: ["Vulcanid", "Incineraptor", "Wyvierno"],
+    idealTraits: [
+      { tier: "S", name: "Bellow Fellow", effect: "+5% Smelting Output" },
+      { tier: "A", name: "Industrious", effect: "+18% Job Efficiency" },
+      { tier: "A", name: "Diligent", effect: "+10% Job Efficiency" },
+    ],
+    images: ["/images/vulcanid.jpg", "/images/wyvierno.jpg"],
+  },
+  {
+    job: "Charging",
+    icon: "⚡",
+    description: "Power generation",
+    bestPalmons: ["Barkplug", "Thunderclawd", "Kilohopp"],
+    idealTraits: [
+      { tier: "S", name: "Lightning Affinity", effect: "+5% Charging Output" },
+      { tier: "A", name: "Battery Pack", effect: "+3% Charging Output" },
+      { tier: "A", name: "Industrious", effect: "+18% Job Efficiency" },
+    ],
+    images: ["/images/barkplug.jpg", "/images/thunderclawd.jpg"],
+  },
 ];
 
-const ssrPalmons = [
-  { name: "Squeezel", power: "1.78M", image: "/images/squeezel.jpg", traits: ["+38 Shield!", "Top SSR"] },
-  { name: "Meowdame", power: "1.16M", image: "/images/meowdame2.jpg", traits: ["Triple Type", "Full Gear"] },
-  { name: "Thunderclawd", power: "547K", image: "/images/thunderclawd.jpg", traits: ["Electric", "Storm Cat"] },
-  { name: "Vulcanid", power: "423K", image: "/images/vulcanid.jpg", traits: ["Fire", "Full Gear"] },
-  { name: "Snowkami", power: "627K", image: "/images/snowkami.jpg", traits: ["Ice Wolf", "Full Gear"] },
-  { name: "Terrastudo", power: "349K", image: "/images/terrastudo.jpg", traits: ["Tank", "+6 Weapon"] },
+// All traits organized by tier
+const allTraits = {
+  S: [
+    { name: "Prodigy", effect: "Research time -900s", role: "Analyzing" },
+    { name: "Supersonic", effect: "Move Speed +10%", role: "All Jobs" },
+    { name: "Clear-Headed", effect: "Stun Resist +7%", role: "Combat" },
+    { name: "Unyielding", effect: "Tenacity +5%", role: "Combat" },
+    { name: "Sharpshooter", effect: "Accuracy +5%", role: "Combat" },
+    { name: "Steadfast", effect: "Defense +7%", role: "Combat" },
+    { name: "Belligerent", effect: "Attack +7%", role: "Combat" },
+    { name: "Vigorous", effect: "HP +10%", role: "Combat" },
+    { name: "Blessed", effect: "Crit Rate +8%", role: "Combat" },
+  ],
+  A: [
+    { name: "Industrious", effect: "Job Efficiency +18%", role: "All Jobs" },
+    { name: "Lightspeed", effect: "Move Speed +15%", role: "All Jobs" },
+    { name: "Diligent", effect: "Job Efficiency +10%", role: "All Jobs" },
+    { name: "Temperate", effect: "Food consumption -25%", role: "Sustain" },
+    { name: "Caffeinated", effect: "Energy -25% slower", role: "Sustain" },
+    { name: "Light Eater", effect: "Hunger -25% slower", role: "Sustain" },
+    { name: "Coach", effect: "Training time -4%", role: "Training" },
+    { name: "Fleet-Footed", effect: "Move Speed +5%", role: "All Jobs" },
+    { name: "Iron Skull", effect: "Crit DMG Reduction +4%", role: "Combat" },
+    { name: "Brutal", effect: "Crit Damage +4%", role: "Combat" },
+    { name: "Hardy", effect: "Tenacity +2.5%", role: "Combat" },
+    { name: "Favored", effect: "Crit Rate +2.5%", role: "Combat" },
+    { name: "Slippery", effect: "Evasion +2.5%", role: "Combat" },
+    { name: "Crack Shot", effect: "Accuracy +2.5%", role: "Combat" },
+    { name: "Energetic", effect: "HP +4%", role: "Combat" },
+    { name: "Resolute", effect: "Defense +4%", role: "Combat" },
+    { name: "Combative", effect: "Attack +4%", role: "Combat" },
+  ],
+  B: [
+    { name: "Sweet Dreams", effect: "XP +5% (Bed)", role: "Rest" },
+    { name: "Comfy", effect: "XP +1/sec (Bed)", role: "Rest" },
+    { name: "Alchemist", effect: "Magicking +2%", role: "Magicking" },
+    { name: "Dremium Hunter", effect: "Dremium +2%", role: "Dremium" },
+    { name: "Healing Touch", effect: "Healing time -2%", role: "Healing" },
+    { name: "Anvil Adept", effect: "Smelting +5%", role: "Smelting" },
+    { name: "Stone Skull", effect: "Crit DMG Reduction +3%", role: "Combat" },
+    { name: "Mean", effect: "Crit Damage +3%", role: "Combat" },
+    { name: "Stubborn", effect: "Tenacity +1.5%", role: "Combat" },
+    { name: "Lucky", effect: "Crit Rate +1.5%", role: "Combat" },
+    { name: "Nimble", effect: "Evasion +1.5%", role: "Combat" },
+    { name: "Gunner", effect: "Accuracy +1.5%", role: "Combat" },
+    { name: "Durable", effect: "HP +2%", role: "Combat" },
+    { name: "Rooted", effect: "Defense +2%", role: "Combat" },
+    { name: "Hostile", effect: "Attack +2%", role: "Combat" },
+  ],
+  C: [
+    { name: "Fabergé Jaw", effect: "Crit DMG Reduction -3%", role: "❌" },
+    { name: "Softie", effect: "Crit Damage -3%", role: "❌" },
+    { name: "Spineless", effect: "Tenacity -2%", role: "❌" },
+    { name: "Jinxed", effect: "Crit Rate -2%", role: "❌" },
+    { name: "Fumbling", effect: "Evasion -2%", role: "❌" },
+    { name: "Myopic", effect: "Accuracy -2%", role: "❌" },
+    { name: "Sickly", effect: "HP -4%", role: "❌" },
+  ],
+};
+
+// Job-specific traits
+const specialTraits = [
+  { name: "Lightning Affinity", effect: "+5% Charging Output", job: "Charging" },
+  { name: "Battery Pack", effect: "+3% Charging Output", job: "Charging" },
+  { name: "Bellow Fellow", effect: "+5% Smelting Output", job: "Smelting" },
+  { name: "Plank Pro", effect: "+3% Sawing Output", job: "Sawing" },
+  { name: "Efficient", effect: "+Mining Output", job: "Mining" },
 ];
 
-const sTraits = [
-  { name: "Belligerent", effect: "+7% ATK" },
-  { name: "Robust", effect: "+7% HP" },
-  { name: "Steadfast", effect: "+7% DEF" },
-  { name: "Sharpshooter", effect: "+5% ACC" },
-  { name: "Clear-Headed", effect: "+7% Stun Resist" },
-  { name: "Supersonic", effect: "+10% Move Speed" },
-];
-
-const aTraits = [
-  { name: "Energetic", effect: "+4% HP" },
-  { name: "Combative", effect: "+4% ATK" },
-  { name: "Resolute", effect: "+4% DEF" },
-  { name: "Brutal", effect: "+4% Crit DMG" },
-  { name: "Favored", effect: "+2.5% Crit Rate" },
-  { name: "Industrious", effect: "+15% Work Speed" },
-];
-
-const bTraits = [
-  { name: "Lucky", effect: "+2% Crit Rate" },
-  { name: "Temperate", effect: "-25% Food Drain" },
-  { name: "Caffeinated", effect: "-25% Energy Drain" },
-  { name: "Fleet-Footed", effect: "+5% Move Speed" },
-];
-
-const badTraits = [
-  { name: "Sickly", effect: "-4% HP" },
-  { name: "Spineless", effect: "-2% Tenacity" },
-  { name: "Jinxed", effect: "-2% Crit Rate" },
-  { name: "Myopic", effect: "-2% Accuracy" },
-];
-
-const combos = [
-  { name: "Combat DPS", desc: "For base defense & raids", traits: ["S Belligerent", "S Robust", "A Brutal"] },
-  { name: "Tank Build", desc: "For frontline Palmons", traits: ["S Robust", "S Steadfast", "A Energetic"] },
-  { name: "Worker Build", desc: "For base production", traits: ["S Supersonic", "A Industrious", "A Diligent"] },
-  { name: "Speed Build", desc: "For exploration & transport", traits: ["S Supersonic", "A Fleet-Footed", "B Caffeinated"] },
-];
-
-function PalmonCard({ name, power, image, traits }: { name: string; power: string; image: string; traits: string[] }) {
+function JobCard({ job, icon, description, bestPalmons, idealTraits, images }: typeof jobBuilds[0]) {
   return (
-    <div className="group bg-[#12121a] border border-white/5 rounded-2xl overflow-hidden transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl">
-      <div className="relative h-48 overflow-hidden">
-        <Image src={image} alt={name} fill className="object-cover object-top" />
-        <span className="absolute top-3 left-3 bg-gradient-to-r from-orange-500 to-yellow-500 text-black font-bold px-2.5 py-1 rounded text-xs">UR</span>
-        <span className="absolute bottom-3 right-3 bg-black/80 text-yellow-400 font-mono font-bold px-3 py-1.5 rounded-lg text-sm">✊ {power}</span>
+    <div className="bg-[#12121a] border border-white/5 rounded-2xl overflow-hidden">
+      <div className="p-6 border-b border-white/5">
+        <div className="flex items-center gap-4 mb-2">
+          <span className="text-3xl">{icon}</span>
+          <div>
+            <h3 className="text-xl font-bold">{job}</h3>
+            <p className="text-sm text-gray-500">{description}</p>
+          </div>
+        </div>
       </div>
-      <div className="p-5">
-        <h3 className="text-xl font-bold mb-3">{name}</h3>
-        <div className="flex flex-wrap gap-1.5">
-          {traits.map((trait, i) => (
-            <span key={i} className="text-xs px-2.5 py-1.5 bg-white/5 rounded border-l-2 border-yellow-400 text-yellow-400">
-              {trait}
-            </span>
-          ))}
+      
+      {/* Palmon images */}
+      <div className="flex gap-2 p-4 bg-black/20 overflow-x-auto">
+        {images.map((img, i) => (
+          <div key={i} className="relative w-20 h-28 flex-shrink-0 rounded-lg overflow-hidden">
+            <Image src={img} alt="" fill className="object-cover object-top" />
+          </div>
+        ))}
+      </div>
+      
+      <div className="p-6">
+        <div className="mb-4">
+          <h4 className="text-xs uppercase tracking-widest text-gray-500 mb-2">Best Palmons</h4>
+          <div className="flex flex-wrap gap-2">
+            {bestPalmons.map((p) => (
+              <span key={p} className="text-sm px-3 py-1.5 bg-white/5 rounded-lg font-medium">{p}</span>
+            ))}
+          </div>
+        </div>
+        
+        <div>
+          <h4 className="text-xs uppercase tracking-widest text-gray-500 mb-2">Ideal Traits</h4>
+          <div className="space-y-2">
+            {idealTraits.map((t) => (
+              <div key={t.name} className={`flex items-center justify-between p-2.5 rounded-lg border-l-2 bg-white/[0.02] ${
+                t.tier === "S" ? "border-yellow-400" : "border-purple-400"
+              }`}>
+                <div className="flex items-center gap-2">
+                  <span className={`font-mono text-xs font-bold px-1.5 py-0.5 rounded ${
+                    t.tier === "S" ? "bg-yellow-400/20 text-yellow-400" : "bg-purple-400/20 text-purple-400"
+                  }`}>{t.tier}</span>
+                  <span className="font-medium text-sm">{t.name}</span>
+                </div>
+                <span className="font-mono text-xs text-green-400">{t.effect}</span>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </div>
   );
 }
 
-function TraitItem({ name, effect, tier }: { name: string; effect: string; tier: "s" | "a" | "b" | "c" }) {
-  const borderColors = { s: "border-l-yellow-400", a: "border-l-purple-400", b: "border-l-blue-400", c: "border-l-red-400" };
-  const effectColor = tier === "c" ? "text-red-400" : "text-green-400";
-  
+function TraitRow({ name, effect, role }: { name: string; effect: string; role: string }) {
   return (
-    <div className={`flex justify-between items-center p-4 bg-[#12121a] border border-white/5 rounded-xl transition-all hover:bg-[#1a1a25] hover:translate-x-1 border-l-[3px] ${borderColors[tier]}`}>
-      <span className="font-semibold">{name}</span>
-      <span className={`font-mono text-sm ${effectColor}`}>{effect}{tier === "c" && " ❌"}</span>
+    <div className="flex items-center justify-between p-3 bg-white/[0.02] rounded-lg hover:bg-white/[0.04] transition-colors">
+      <div>
+        <span className="font-medium">{name}</span>
+        <span className="text-xs text-gray-500 ml-2">({role})</span>
+      </div>
+      <span className="font-mono text-sm text-green-400">{effect}</span>
+    </div>
+  );
+}
+
+function BadTraitRow({ name, effect }: { name: string; effect: string }) {
+  return (
+    <div className="flex items-center justify-between p-3 bg-red-500/5 rounded-lg border border-red-500/20">
+      <span className="font-medium">{name}</span>
+      <span className="font-mono text-sm text-red-400">{effect} ❌</span>
     </div>
   );
 }
@@ -94,7 +251,7 @@ function TraitItem({ name, effect, tier }: { name: string; effect: string; tier:
 export default function Home() {
   return (
     <div className="min-h-screen bg-[#0a0a0f] text-white">
-      {/* Background gradient */}
+      {/* Background */}
       <div className="fixed inset-0 pointer-events-none">
         <div className="absolute top-0 left-[20%] w-96 h-96 bg-yellow-500/5 rounded-full blur-3xl" />
         <div className="absolute bottom-0 right-[20%] w-96 h-96 bg-cyan-500/5 rounded-full blur-3xl" />
@@ -104,170 +261,163 @@ export default function Home() {
         {/* Hero */}
         <header className="text-center py-16 pb-20 relative">
           <span className="inline-block bg-gradient-to-r from-yellow-400 to-orange-500 text-black text-xs font-bold tracking-widest uppercase px-4 py-1.5 rounded-full mb-5">
-            Trait Guide
+            Complete Guide
           </span>
           <h1 className="text-5xl md:text-7xl font-black tracking-tight mb-4">
             Best <span className="bg-gradient-to-r from-yellow-400 to-orange-500 bg-clip-text text-transparent">Traits</span>
           </h1>
           <p className="text-gray-400 text-lg max-w-xl mx-auto">
-            The ultimate guide to trait combinations for maximum power in Palmon Survival
+            The ideal trait combinations for every Palmon and every job in Palmon Survival
           </p>
           <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-48 h-0.5 bg-gradient-to-r from-yellow-400 to-orange-500 rounded" />
         </header>
 
-        {/* Featured Ninjump */}
+        {/* Quick Reference */}
+        <section className="mb-16">
+          <div className="bg-gradient-to-br from-yellow-400/10 to-orange-500/10 border border-yellow-400/20 rounded-2xl p-6 md:p-8">
+            <h2 className="text-xl font-bold mb-4">🎯 Quick Reference: Best Traits by Role</h2>
+            <div className="grid md:grid-cols-2 gap-4">
+              <div className="bg-black/30 rounded-xl p-4">
+                <h3 className="font-bold text-yellow-400 mb-2">⚔️ Combat Palmons</h3>
+                <p className="text-sm text-gray-300">Belligerent + Vigorous + Clear-Headed + Blessed</p>
+              </div>
+              <div className="bg-black/30 rounded-xl p-4">
+                <h3 className="font-bold text-cyan-400 mb-2">🔧 Worker Palmons</h3>
+                <p className="text-sm text-gray-300">Industrious + Diligent + Lightspeed/Supersonic</p>
+              </div>
+              <div className="bg-black/30 rounded-xl p-4">
+                <h3 className="font-bold text-purple-400 mb-2">⚡ Specialist Jobs</h3>
+                <p className="text-sm text-gray-300">Lightning Affinity (Charging) / Bellow Fellow (Smelting)</p>
+              </div>
+              <div className="bg-black/30 rounded-xl p-4">
+                <h3 className="font-bold text-green-400 mb-2">🏠 Base Efficiency</h3>
+                <p className="text-sm text-gray-300">Prodigy (Research) / Coach (Training) / Temperate</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Best Traits Per Job */}
         <section className="mb-16">
           <div className="flex items-center gap-4 mb-8">
-            <span className="font-mono text-sm font-bold px-3 py-1.5 rounded bg-gradient-to-r from-yellow-400 to-orange-500 text-black">SHOWCASE</span>
-            <h2 className="text-2xl font-bold">Perfect Traits Example</h2>
+            <span className="font-mono text-sm font-bold px-3 py-1.5 rounded bg-gradient-to-r from-yellow-400 to-orange-500 text-black">JOBS</span>
+            <h2 className="text-2xl font-bold">Best Traits Per Job</h2>
           </div>
           
-          <div className="bg-gradient-to-br from-[#1a1a25] to-[#12121a] border-2 border-yellow-400/30 rounded-3xl p-6 md:p-10 grid md:grid-cols-[300px_1fr] gap-8 relative overflow-hidden">
-            <span className="absolute top-5 right-5 bg-gradient-to-r from-yellow-400 to-orange-500 text-black text-xs font-bold px-4 py-1.5 rounded-full tracking-wide">
-              BEST TRAITS
-            </span>
-            
-            <div className="relative aspect-[9/16] max-h-[500px] rounded-2xl overflow-hidden shadow-2xl">
-              <Image src="/images/ninjump.jpg" alt="Ninjump" fill className="object-cover object-top" />
-            </div>
-            
-            <div>
-              <h3 className="text-4xl font-extrabold mb-2">Ninjump</h3>
-              <span className="inline-block bg-gradient-to-r from-orange-500 to-yellow-500 text-black font-bold px-3 py-1 rounded text-sm mb-6">
-                UR • Level 226
-              </span>
-              
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 p-5 bg-black/30 rounded-2xl mb-6">
-                {[
-                  { value: "5.37M", label: "Power" },
-                  { value: "104.6K", label: "Attack" },
-                  { value: "19.4K", label: "Defense" },
-                  { value: "9.44M", label: "HP" },
-                ].map((stat) => (
-                  <div key={stat.label} className="text-center">
-                    <div className="font-mono text-xl font-bold text-yellow-400">{stat.value}</div>
-                    <div className="text-xs text-gray-500 uppercase tracking-wider">{stat.label}</div>
-                  </div>
-                ))}
-              </div>
-              
-              <h4 className="text-xs uppercase tracking-widest text-gray-500 mb-3">Trait Loadout</h4>
-              <div className="space-y-2">
-                {[
-                  { tier: "S", name: "Belligerent", effect: "+7% ATK", color: "border-yellow-400 bg-yellow-400/10 text-yellow-400" },
-                  { tier: "S", name: "Robust", effect: "+7% HP", color: "border-yellow-400 bg-yellow-400/10 text-yellow-400" },
-                  { tier: "A", name: "Energetic", effect: "+4% HP", color: "border-purple-400 bg-purple-400/10 text-purple-400" },
-                  { tier: "B", name: "Lucky", effect: "+2% Crit", color: "border-blue-400 bg-blue-400/10 text-blue-400" },
-                ].map((trait) => (
-                  <div key={trait.name} className={`flex items-center gap-3 p-3 rounded-lg border-l-[3px] bg-white/[0.02] ${trait.color.split(" ")[0]}`}>
-                    <span className={`font-mono text-sm font-bold w-6 h-6 flex items-center justify-center rounded ${trait.color.split(" ").slice(1).join(" ")}`}>
-                      {trait.tier}
-                    </span>
-                    <span className="font-semibold flex-1">{trait.name}</span>
-                    <span className="font-mono text-sm text-green-400">{trait.effect}</span>
-                  </div>
-                ))}
-              </div>
-              
-              <p className="mt-6 text-gray-400 text-sm">
-                Double S-tier traits (Belligerent + Robust) are the holy grail. This Ninjump has a near-perfect offensive build with bonus survivability.
-              </p>
-            </div>
+          <div className="grid md:grid-cols-2 gap-5">
+            {jobBuilds.map((job) => <JobCard key={job.job} {...job} />)}
           </div>
         </section>
 
-        {/* UR Collection */}
+        {/* Job-Specific Traits */}
         <section className="mb-16">
           <div className="flex items-center gap-4 mb-8">
-            <span className="font-mono text-sm font-bold px-3 py-1.5 rounded bg-gradient-to-r from-red-400 to-pink-500 text-white">S</span>
-            <h2 className="text-2xl font-bold">More S-Tier Trait Builds</h2>
+            <span className="font-mono text-sm font-bold px-3 py-1.5 rounded bg-gradient-to-r from-purple-400 to-purple-600 text-white">SPECIAL</span>
+            <h2 className="text-2xl font-bold">Job-Specific Traits</h2>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-            {urPalmons.map((p) => <PalmonCard key={p.name} {...p} />)}
-          </div>
-        </section>
-
-        {/* Trait Rankings */}
-        <section className="mb-16">
-          <div className="flex items-center gap-4 mb-8">
-            <span className="font-mono text-sm font-bold px-3 py-1.5 rounded bg-gradient-to-r from-yellow-400 to-orange-500 text-black">S</span>
-            <h2 className="text-2xl font-bold">S-Tier Traits (Always Keep!)</h2>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-            {sTraits.map((t) => <TraitItem key={t.name} {...t} tier="s" />)}
-          </div>
-        </section>
-
-        <section className="mb-16">
-          <div className="flex items-center gap-4 mb-8">
-            <span className="font-mono text-sm font-bold px-3 py-1.5 rounded bg-gradient-to-r from-purple-400 to-purple-600 text-white">A</span>
-            <h2 className="text-2xl font-bold">A-Tier Traits (Great to Have)</h2>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-            {aTraits.map((t) => <TraitItem key={t.name} {...t} tier="a" />)}
-          </div>
-        </section>
-
-        <section className="mb-16">
-          <div className="flex items-center gap-4 mb-8">
-            <span className="font-mono text-sm font-bold px-3 py-1.5 rounded bg-gradient-to-r from-blue-400 to-blue-600 text-white">B</span>
-            <h2 className="text-2xl font-bold">B-Tier Traits (Decent Filler)</h2>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-            {bTraits.map((t) => <TraitItem key={t.name} {...t} tier="b" />)}
-          </div>
-        </section>
-
-        <section className="mb-16">
-          <div className="flex items-center gap-4 mb-8">
-            <span className="font-mono text-sm font-bold px-3 py-1.5 rounded bg-red-500 text-white">C</span>
-            <h2 className="text-2xl font-bold">Traits to Avoid!</h2>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-            {badTraits.map((t) => <TraitItem key={t.name} {...t} tier="c" />)}
-          </div>
-        </section>
-
-        {/* Best Combos */}
-        <section className="mb-16">
-          <div className="bg-[#12121a] border border-white/5 rounded-3xl p-8">
-            <h2 className="text-2xl font-bold mb-6">🎯 Best Trait Combinations</h2>
-            <div className="space-y-4">
-              {combos.map((combo) => (
-                <div key={combo.name} className="grid md:grid-cols-[200px_1fr] gap-5 p-5 bg-black/20 rounded-2xl items-center">
+          
+          <div className="bg-[#12121a] border border-white/5 rounded-2xl p-6">
+            <p className="text-gray-400 text-sm mb-4">These traits only work for specific jobs — prioritize them for those Palmons!</p>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-3">
+              {specialTraits.map((t) => (
+                <div key={t.name} className="flex items-center justify-between p-4 bg-purple-500/10 border border-purple-500/20 rounded-xl">
                   <div>
-                    <div className="font-bold text-lg">{combo.name}</div>
-                    <div className="text-xs text-gray-500">{combo.desc}</div>
+                    <div className="font-bold">{t.name}</div>
+                    <div className="text-xs text-gray-500">{t.job}</div>
                   </div>
-                  <div className="flex flex-wrap gap-2">
-                    {combo.traits.map((trait) => (
-                      <span key={trait} className="flex items-center gap-2 px-3 py-2 bg-yellow-400/10 border border-yellow-400/20 rounded-lg text-sm">
-                        <span className="font-mono font-bold text-yellow-400">{trait.split(" ")[0]}</span>
-                        <span>{trait.split(" ").slice(1).join(" ")}</span>
-                      </span>
-                    ))}
-                  </div>
+                  <span className="font-mono text-sm text-green-400">{t.effect}</span>
                 </div>
               ))}
             </div>
           </div>
         </section>
 
-        {/* SSR Collection */}
+        {/* All S-Tier Traits */}
         <section className="mb-16">
           <div className="flex items-center gap-4 mb-8">
-            <span className="font-mono text-sm font-bold px-3 py-1.5 rounded bg-gradient-to-r from-red-400 to-pink-500 text-white">SSR</span>
-            <h2 className="text-2xl font-bold">Strong SSR Collection</h2>
+            <span className="font-mono text-sm font-bold px-3 py-1.5 rounded bg-gradient-to-r from-yellow-400 to-orange-500 text-black">S-TIER</span>
+            <h2 className="text-2xl font-bold">Always Keep These!</h2>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-            {ssrPalmons.map((p) => <PalmonCard key={p.name} {...p} />)}
+          
+          <div className="bg-[#12121a] border border-yellow-400/20 rounded-2xl p-6">
+            <div className="grid md:grid-cols-2 gap-3">
+              {allTraits.S.map((t) => <TraitRow key={t.name} {...t} />)}
+            </div>
+          </div>
+        </section>
+
+        {/* All A-Tier Traits */}
+        <section className="mb-16">
+          <div className="flex items-center gap-4 mb-8">
+            <span className="font-mono text-sm font-bold px-3 py-1.5 rounded bg-gradient-to-r from-purple-400 to-purple-600 text-white">A-TIER</span>
+            <h2 className="text-2xl font-bold">Great to Have</h2>
+          </div>
+          
+          <div className="bg-[#12121a] border border-white/5 rounded-2xl p-6">
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-3">
+              {allTraits.A.map((t) => <TraitRow key={t.name} {...t} />)}
+            </div>
+          </div>
+        </section>
+
+        {/* All B-Tier Traits */}
+        <section className="mb-16">
+          <div className="flex items-center gap-4 mb-8">
+            <span className="font-mono text-sm font-bold px-3 py-1.5 rounded bg-gradient-to-r from-blue-400 to-blue-600 text-white">B-TIER</span>
+            <h2 className="text-2xl font-bold">Decent Filler</h2>
+          </div>
+          
+          <div className="bg-[#12121a] border border-white/5 rounded-2xl p-6">
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-3">
+              {allTraits.B.map((t) => <TraitRow key={t.name} {...t} />)}
+            </div>
+          </div>
+        </section>
+
+        {/* C-Tier - Avoid! */}
+        <section className="mb-16">
+          <div className="flex items-center gap-4 mb-8">
+            <span className="font-mono text-sm font-bold px-3 py-1.5 rounded bg-red-500 text-white">AVOID</span>
+            <h2 className="text-2xl font-bold">Never Keep These!</h2>
+          </div>
+          
+          <div className="bg-red-500/5 border border-red-500/20 rounded-2xl p-6">
+            <p className="text-red-300 text-sm mb-4">⚠️ These traits have negative effects — replace Palmons with these ASAP!</p>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-3">
+              {allTraits.C.map((t) => <BadTraitRow key={t.name} name={t.name} effect={t.effect} />)}
+            </div>
+          </div>
+        </section>
+
+        {/* Pro Tips */}
+        <section className="mb-16">
+          <div className="bg-gradient-to-br from-[#1a1a25] to-[#12121a] border border-white/10 rounded-2xl p-8">
+            <h2 className="text-2xl font-bold mb-6">💡 Pro Tips</h2>
+            <div className="grid md:grid-cols-2 gap-6">
+              <div>
+                <h3 className="font-bold text-yellow-400 mb-2">Trait Stacking</h3>
+                <p className="text-sm text-gray-400">Traits like Move Speed, Job Efficiency, and Crit stack. Aim for multiple synergistic traits on one Palmon.</p>
+              </div>
+              <div>
+                <h3 className="font-bold text-cyan-400 mb-2">Role Assignment</h3>
+                <p className="text-sm text-gray-400">Put Prodigy Palmons in Analysis, Coach in Training Hall, and Lightning Affinity in Charging stations.</p>
+              </div>
+              <div>
+                <h3 className="font-bold text-purple-400 mb-2">Breeding</h3>
+                <p className="text-sm text-gray-400">Use the Nursery to breed better traits. Offspring can inherit parent traits — aim for S-tier combinations.</p>
+              </div>
+              <div>
+                <h3 className="font-bold text-green-400 mb-2">Prioritize Combat</h3>
+                <p className="text-sm text-gray-400">Combat traits (Belligerent, Vigorous) are hardest to replace. Save your best combat-traited Palmons!</p>
+              </div>
+            </div>
           </div>
         </section>
 
         {/* Footer */}
         <footer className="text-center py-10 text-gray-500 text-sm">
-          <p>Made with 🦊 by Arie • Screenshots from actual gameplay</p>
-          <p className="mt-2">Palmon Survival © Theria Games</p>
+          <p>Made with 🦊 by Arie • Data from Theria Games & GamingOnPhone</p>
+          <p className="mt-2">Palmon Survival © Lilith Games</p>
         </footer>
       </div>
     </div>
