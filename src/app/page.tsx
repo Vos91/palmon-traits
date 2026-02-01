@@ -1,4 +1,6 @@
 import Image from "next/image";
+import Link from "next/link";
+import { palmons } from "@/data/palmons";
 
 // Best traits per job/role
 const jobBuilds = [
@@ -454,6 +456,36 @@ export default function Home() {
                 <p className="text-sm text-gray-400">Combat traits (Belligerent, Vigorous) are hardest to replace. Save your best combat-traited Palmons!</p>
               </div>
             </div>
+          </div>
+        </section>
+
+        {/* All Palmons */}
+        <section className="mb-16">
+          <div className="flex items-center gap-4 mb-8">
+            <span className="font-mono text-sm font-bold px-3 py-1.5 rounded bg-gradient-to-r from-cyan-400 to-blue-500 text-white">ALL</span>
+            <h2 className="text-2xl font-bold">Best Traits Per Palmon</h2>
+          </div>
+          
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+            {palmons.map((p) => (
+              <Link
+                key={p.slug}
+                href={`/palmon/${p.slug}`}
+                className="group bg-[#12121a] border border-white/5 rounded-xl p-4 hover:border-yellow-400/50 hover:bg-[#1a1a25] transition-all"
+              >
+                <div className="flex items-center gap-3">
+                  {p.image && (
+                    <div className="relative w-12 h-12 rounded-lg overflow-hidden flex-shrink-0">
+                      <Image src={p.image} alt={p.name} fill className="object-cover object-top" />
+                    </div>
+                  )}
+                  <div>
+                    <div className="font-bold group-hover:text-yellow-400 transition-colors">{p.name}</div>
+                    <div className="text-xs text-gray-500">{p.rarity} • {p.element}</div>
+                  </div>
+                </div>
+              </Link>
+            ))}
           </div>
         </section>
 
