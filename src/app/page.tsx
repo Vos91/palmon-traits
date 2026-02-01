@@ -8,11 +8,11 @@ const jobBuilds = [
     description: "Base defense & raids",
     bestPalmons: ["Ghillant", "Mantieray", "Ninjump"],
     idealTraits: [
+      { tier: "S+", name: "Warlike", effect: "+10% ATK" },
+      { tier: "S+", name: "Vigorous", effect: "+10% HP" },
+      { tier: "S+", name: "Blessed", effect: "+8% Crit Rate" },
       { tier: "S", name: "Belligerent", effect: "+7% ATK" },
-      { tier: "S", name: "Vigorous", effect: "+10% HP" },
       { tier: "S", name: "Clear-Headed", effect: "+7% Stun Resist" },
-      { tier: "A", name: "Blessed", effect: "+8% Crit Rate" },
-      { tier: "A", name: "Sharpshooter", effect: "+5% Accuracy" },
     ],
     images: ["/images/ninjump.jpg", "/images/mantleray.jpg"],
   },
@@ -105,6 +105,14 @@ const jobBuilds = [
 
 // All traits organized by tier
 const allTraits = {
+  "S+": [
+    { name: "Warlike", effect: "Attack +10%", role: "Combat" },
+    { name: "Vigorous", effect: "HP +10%", role: "Combat" },
+    { name: "Blessed", effect: "Crit Rate +8%", role: "Combat" },
+    { name: "Heartless", effect: "Crit Damage +8%", role: "Combat" },
+    { name: "Diamond Skull", effect: "Crit DEF +15%", role: "Combat" },
+    { name: "Ironclad", effect: "Defense +10%", role: "Combat" },
+  ],
   S: [
     { name: "Prodigy", effect: "Research time -900s", role: "Analyzing" },
     { name: "Supersonic", effect: "Move Speed +10%", role: "All Jobs" },
@@ -113,8 +121,6 @@ const allTraits = {
     { name: "Sharpshooter", effect: "Accuracy +5%", role: "Combat" },
     { name: "Steadfast", effect: "Defense +7%", role: "Combat" },
     { name: "Belligerent", effect: "Attack +7%", role: "Combat" },
-    { name: "Vigorous", effect: "HP +10%", role: "Combat" },
-    { name: "Blessed", effect: "Crit Rate +8%", role: "Combat" },
   ],
   A: [
     { name: "Industrious", effect: "Job Efficiency +18%", role: "All Jobs" },
@@ -209,11 +215,11 @@ function JobCard({ job, icon, description, bestPalmons, idealTraits, images }: t
           <div className="space-y-2">
             {idealTraits.map((t) => (
               <div key={t.name} className={`flex items-center justify-between p-2.5 rounded-lg border-l-2 bg-white/[0.02] ${
-                t.tier === "S" ? "border-yellow-400" : "border-purple-400"
+                t.tier === "S+" ? "border-orange-500" : t.tier === "S" ? "border-yellow-400" : "border-purple-400"
               }`}>
                 <div className="flex items-center gap-2">
                   <span className={`font-mono text-xs font-bold px-1.5 py-0.5 rounded ${
-                    t.tier === "S" ? "bg-yellow-400/20 text-yellow-400" : "bg-purple-400/20 text-purple-400"
+                    t.tier === "S+" ? "bg-orange-500/20 text-orange-400" : t.tier === "S" ? "bg-yellow-400/20 text-yellow-400" : "bg-purple-400/20 text-purple-400"
                   }`}>{t.tier}</span>
                   <span className="font-medium text-sm">{t.name}</span>
                 </div>
@@ -278,8 +284,8 @@ export default function Home() {
             <h2 className="text-xl font-bold mb-4">🎯 Quick Reference: Best Traits by Role</h2>
             <div className="grid md:grid-cols-2 gap-4">
               <div className="bg-black/30 rounded-xl p-4">
-                <h3 className="font-bold text-yellow-400 mb-2">⚔️ Combat Palmons</h3>
-                <p className="text-sm text-gray-300">Belligerent + Vigorous + Clear-Headed + Blessed</p>
+                <h3 className="font-bold text-orange-400 mb-2">⚔️ Combat Palmons (S+ Tier)</h3>
+                <p className="text-sm text-gray-300">Warlike + Vigorous + Blessed + Diamond Skull</p>
               </div>
               <div className="bg-black/30 rounded-xl p-4">
                 <h3 className="font-bold text-cyan-400 mb-2">🔧 Worker Palmons</h3>
@@ -332,11 +338,26 @@ export default function Home() {
           </div>
         </section>
 
+        {/* S+ Tier Traits */}
+        <section className="mb-16">
+          <div className="flex items-center gap-4 mb-8">
+            <span className="font-mono text-sm font-bold px-3 py-1.5 rounded bg-gradient-to-r from-orange-500 to-red-500 text-white">S+ TIER</span>
+            <h2 className="text-2xl font-bold">God-Tier Traits (Best in Game!)</h2>
+          </div>
+          
+          <div className="bg-gradient-to-br from-orange-500/10 to-red-500/10 border-2 border-orange-500/30 rounded-2xl p-6">
+            <p className="text-orange-300 text-sm mb-4">⭐ These are the BEST traits in the game — never release a Palmon with these!</p>
+            <div className="grid md:grid-cols-2 gap-3">
+              {allTraits["S+"].map((t) => <TraitRow key={t.name} {...t} />)}
+            </div>
+          </div>
+        </section>
+
         {/* All S-Tier Traits */}
         <section className="mb-16">
           <div className="flex items-center gap-4 mb-8">
             <span className="font-mono text-sm font-bold px-3 py-1.5 rounded bg-gradient-to-r from-yellow-400 to-orange-500 text-black">S-TIER</span>
-            <h2 className="text-2xl font-bold">Always Keep These!</h2>
+            <h2 className="text-2xl font-bold">Excellent Traits</h2>
           </div>
           
           <div className="bg-[#12121a] border border-yellow-400/20 rounded-2xl p-6">
