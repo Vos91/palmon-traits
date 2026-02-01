@@ -190,20 +190,6 @@ export const palmons: Palmon[] = [
     notes: "Versatile worker. Speed and efficiency traits.",
   },
   {
-    name: "Hoofrit",
-    slug: "hoofrit",
-    rarity: "UR",
-    element: "Fire",
-    jobs: ["Combat"],
-    image: "/images/hoofrit.jpg",
-    bestTraits: {
-      sPlusTier: ["Warlike", "Vigorous", "Heartless"],
-      sTier: ["Belligerent", "Robust", "Ruthless"],
-      aTier: ["Combative", "Energetic", "Brutal"],
-    },
-    notes: "Fire combat unit with cannon attacks.",
-  },
-  {
     name: "Limudroid",
     slug: "limudroid",
     rarity: "UR",
